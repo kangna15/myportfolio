@@ -1,89 +1,361 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Kangna Chauhan - Resume</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- We use Inter for a clean, modern, and highly legible look favored by ATS systems -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root {
+            /* Professional color palette */
+            --primary-color: #1a252f;
+            --secondary-color: #2c3e50;
+            --accent-color: #2980b9;
+            --text-color: #333333;
+            --light-gray: #f4f6f8;
+            --border-color: #e0e6ed;
+            --body-bg: #e5e7eb;
+            --resume-bg: #ffffff;
+            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            background-color: var(--body-bg);
+            line-height: 1.6;
+            /* Center the resume for viewing out of print mode */
+            display: flex;
+            justify-content: center;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        /* 
+           Simulate an A4 piece of paper on the screen 
+           A4 Dimensions: 210mm x 297mm
+        */
+        .resume-wrapper {
+            width: 210mm;
+            min-height: 297mm;
+            background: var(--resume-bg);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+            padding: 2.5rem 3rem;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Layout */
+        header {
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 20px;
+            margin-bottom: 25px;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 4px;
+        }
+
+        .role {
+            font-size: 18px;
+            color: var(--accent-color);
+            font-weight: 500;
+            margin-bottom: 12px;
+        }
+
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            font-size: 14px;
+        }
+
+        .contact-info a,
+        .contact-info span {
+            color: var(--secondary-color);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .contact-info a:hover {
+            color: var(--accent-color);
+            text-decoration: underline;
+        }
+
+        /* Essential Sections */
+        section {
+            margin-bottom: 25px;
+        }
+
+        section:last-child {
+            margin-bottom: 0;
+        }
+
+        h2 {
+            font-size: 18px;
+            color: var(--primary-color);
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            width: 100%;
+        }
+
+        p.objective {
+            font-size: 14px;
+            text-align: justify;
+            color: #444;
+            line-height: 1.7;
+        }
+
+        /* Education */
+        .education-item {
+            margin-bottom: 15px;
+        }
+
+        .degree {
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--primary-color);
+        }
+
+        /* Skills Layout */
+        .skills-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .skill-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .skill-group h3 {
+            font-size: 14px;
+            color: var(--secondary-color);
+            margin-bottom: 8px;
+        }
+
+        .skill-list {
+            list-style: none;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .skill-list li {
+            background-color: var(--light-gray);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 13px;
+            color: var(--primary-color);
+            border: 1px solid var(--border-color);
+            font-weight: 500;
+        }
+
+        /* Projects */
+        .project-item {
+            margin-bottom: 15px;
+        }
+
+        .project-item:last-child {
+            margin-bottom: 0;
+        }
+
+        .project-title {
+            font-weight: 700;
+            font-size: 15px;
+            color: var(--primary-color);
+        }
+
+        .project-desc {
+            font-size: 14px;
+            color: #444;
+            margin-top: 4px;
+            line-height: 1.6;
+        }
+
+        /* Certifications */
+        .cert-list {
+            list-style-type: none;
+        }
+
+        .cert-list li {
+            position: relative;
+            padding-left: 18px;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #444;
+            font-weight: 500;
+        }
+
+        .cert-list li::before {
+            content: "✦";
+            color: var(--accent-color);
+            font-size: 14px;
+            position: absolute;
+            left: 0;
+            top: 2px;
+        }
+
+        /* 
+           Print Styles 
+           Ensures that the output PDF looks exactly like the resume,
+           stripping away background colors and fixing margins.
+        */
+        @media print {
+            body {
+                background-color: transparent;
+                padding: 0;
+                margin: 0;
+                display: block;
+            }
+
+            .resume-wrapper {
+                box-shadow: none;
+                width: 100%;
+                min-height: 100%;
+                padding: 15mm;
+                margin: 0;
+            }
+
+            /* Optimize links for print so they look uniform */
+            a {
+                text-decoration: none;
+                color: var(--secondary-color);
+            }
+
+            @page {
+                size: A4;
+                margin: 0;
+            }
+
+            /* Ensure background colors render properly in some browsers */
+            .skill-list li {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
     </style>
 </head>
-<body class="bg-gray-100 text-gray-900 p-8 max-w-4xl mx-auto">
-    <header class="text-center mb-8">
-        <h1 class="text-4xl font-bold">Kangna Chauhan</h1>
-        <p class="text-xl text-gray-600">B.Tech Student | AI & ML Enthusiast</p>
-        <p class="text-gray-500">kangna_chauhan25@mru.ac.in | <a href="https://github.com/kangna15" class="text-blue-500">GitHub</a> | <a href="https://www.linkedin.com/in/kangna-chauhan-311a6b387" class="text-blue-500">LinkedIn</a></p>
-    </header>
 
-    <section class="mb-8">
-        <h2 class="text-2xl font-semibold border-b-2 border-gray-300 pb-2 mb-4">Education</h2>
-        <div class="mb-4">
-            <h3 class="text-lg font-medium">B.Tech in Artificial Intelligence and Machine Learning</h3>
-            <p class="text-gray-600">Manav Rachna University | Current GPA: 8.06</p>
-            <p class="text-sm text-gray-500">Expected Graduation: [Year]</p>
-        </div>
-    </section>
+<body>
 
-    <section class="mb-8">
-        <h2 class="text-2xl font-semibold border-b-2 border-gray-300 pb-2 mb-4">Skills</h2>
-        <div class="grid grid-cols-2 gap-4">
-            <div>
-                <h3 class="font-medium">Programming Languages</h3>
-                <ul class="list-disc list-inside text-gray-600">
-                    <li>Python</li>
-                    <li>C++</li>
-                    <li>Java</li>
-                    <li>JavaScript</li>
-                </ul>
+    <div class="resume-wrapper">
+        <!-- Header Section -->
+        <header>
+            <h1>Kangna Chauhan</h1>
+            <div class="role">AIML Student / Aspiring AI Engineer</div>
+            <div class="contact-info">
+                <span>📍 India</span>
+                <a href="https://www.linkedin.com/in/kangna-chauhan-311a6b387" target="_blank">🔗
+                    linkedin.com/in/kangna-chauhan-311a6b387</a>
+                <a href="https://github.com/kangna15" target="_blank">💻 github.com/kangna15</a>
+                <!-- Optional: Add Email and Phone Number here later -->
             </div>
-            <div>
-                <h3 class="font-medium">Technologies</h3>
-                <ul class="list-disc list-inside text-gray-600">
-                    <li>Machine Learning</li>
-                    <li>Data Analysis</li>
-                    <li>Deep Learning</li>
-                    <li>HTML/CSS</li>
-                </ul>
+        </header>
+
+        <!-- Objective Section -->
+        <section>
+            <h2>Objective</h2>
+            <p class="objective">
+                A passionate AIML student focused on building intelligent systems, learning machine learning concepts,
+                and applying data-driven solutions to real-world problems. Eager to contribute to innovative projects
+                while growing technically in the field of Artificial Intelligence.
+            </p>
+        </section>
+
+        <!-- Education Section -->
+        <section>
+            <h2>Education</h2>
+            <div class="education-item">
+                <div class="degree">Bachelor of Technology in Artificial Intelligence and Machine Learning</div>
+                <!-- Optional: Add University name, year of graduation, and GPA below -->
             </div>
-            <div>
-                <h3 class="font-medium">Tools</h3>
-                <ul class="list-disc list-inside text-gray-600">
-                    <li>GitHub</li>
-                    <li>VS Code</li>
-                    <li>Docker</li>
-                    <li>PyTorch</li>
-                </ul>
+        </section>
+
+        <!-- Skills Section -->
+        <section>
+            <h2>Technical Skills</h2>
+            <div class="skills-container">
+                <div class="skill-group">
+                    <h3>Programming & Core Domains</h3>
+                    <ul class="skill-list">
+                        <li>Python</li>
+                        <li>C++</li>
+                        <li>Java</li>
+                        <li>JavaScript</li>
+                        <li>Machine Learning</li>
+                        <li>Data Analysis</li>
+                    </ul>
+                </div>
+                <div class="skill-group">
+                    <h3>Tools & Technologies</h3>
+                    <ul class="skill-list">
+                        <li>GitHub</li>
+                        <li>Visual Studio Code</li>
+                        <li>NumPy</li>
+                        <li>Pandas</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <section class="mb-8">
-        <h2 class="text-2xl font-semibold border-b-2 border-gray-300 pb-2 mb-4">Projects</h2>
-        <div class="mb-6">
-            <h3 class="text-lg font-medium">Mood-Based Music Generator</h3>
-            <p class="text-gray-600">Generate music according to user mood using Python, Keras, Pandas.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-lg font-medium">AI Chatbot</h3>
-            <p class="text-gray-600">Responsive AI-driven chatbot using Scikit-Learn, Seaborn, R.</p>
-        </div>
-        <div class="mb-6">
-            <h3 class="text-lg font-medium">Personal Portfolio</h3>
-            <p class="text-gray-600">Custom-built responsive portfolio with Tailwind CSS, JavaScript, GSAP.</p>
-        </div>
-    </section>
+        <!-- Projects Section -->
+        <section>
+            <h2>Projects</h2>
 
-    <section class="mb-8">
-        <h2 class="text-2xl font-semibold border-b-2 border-gray-300 pb-2 mb-4">Certifications & Workshops</h2>
-        <ul class="list-disc list-inside text-gray-600">
-            <li>[Add certifications here]</li>
-        </ul>
-    </section>
+            <div class="project-item">
+                <div class="project-title">Personal Portfolio Website</div>
+                <div class="project-desc">
+                    Built a responsive web application to showcase technical skills and personal projects. Developed
+                    using standard frontend technologies (HTML, CSS) and deployed using GitHub Pages.
+                </div>
+            </div>
 
-    <footer class="text-center text-gray-500 mt-8">
-        <p>© 2024 Kangna Chauhan</p>
-    </footer>
+            <div class="project-item">
+                <div class="project-title">AI Chatbot</div>
+                <div class="project-desc">
+                    Created a basic Python-based chatbot for conversational interaction. Experimented with fundamental
+                    natural language processing concepts to simulate human-like conversations.
+                </div>
+            </div>
+
+            <div class="project-item">
+                <div class="project-title">Music-Based Mood Generator</div>
+                <div class="project-desc">
+                    Exploratory AI-based concept project aimed at generating and recommending music based on user mood
+                    inputs, utilizing data-driven logic to map emotions to musical attributes.
+                </div>
+            </div>
+        </section>
+
+        <!-- Certifications Section -->
+        <section>
+            <h2>Certifications</h2>
+            <ul class="cert-list">
+                <li>Python Programming Certification</li>
+                <li>Quantum Mechanics Certification</li>
+                <li>NumPy and Pandas for Data Analysis</li>
+            </ul>
+        </section>
+    </div>
+
 </body>
+
 </html>
